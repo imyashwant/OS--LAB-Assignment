@@ -1,37 +1,35 @@
-// C program to implement sighup(), sigint() 
-// and sigquit() signal functions 
 #include <signal.h> 
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <sys/types.h> 
 #include <unistd.h> 
 
-// function declaration 
+
 void sighup(); 
 void sigint(); 
 void sigquit(); 
 
-// driver code 
+
 void main() 
 { 
 	int pid; 
 
-	/* get child process */
+
 	if ((pid = fork()) < 0) { 
 		perror("fork"); 
 		exit(1); 
 	} 
 
-	if (pid == 0) { /* child */
+	if (pid == 0) { 
 		signal(SIGHUP, sighup); 
 		signal(SIGINT, sigint); 
 		signal(SIGQUIT, sigquit); 
 		for (;;) 
-			; /* loop for ever */
-	} 
+			; 
+	}
 
-	else /* parent */
-	{ /* pid hold id of child */
+	else 
+	{ 
 		printf("\nPARENT: sending End-term Practical\n\n"); 
 		kill(pid, SIGHUP); 
 
@@ -46,23 +44,23 @@ void main()
 	} 
 } 
 
-// sighup() function definition 
+
 void sighup() 
 
 { 
-	signal(SIGHUP, sighup); /* reset signal */
+	signal(SIGHUP, sighup); 
 	printf("CHILD: I have received the message End-term Practical\n"); 
 } 
 
-// sigint() function definition 
+
 void sigint() 
 
 { 
-	signal(SIGINT, sigint); /* reset signal */
+	signal(SIGINT, sigint); 
 	printf("CHILD:I have received the message End-term Practical\n"); 
 } 
 
-// sigquit() function definition 
+
 void sigquit() 
 { 
 	printf("My DADDY has Killed me!!!\n"); 
